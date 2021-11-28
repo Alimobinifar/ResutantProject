@@ -19,7 +19,6 @@ def create_curser(query):
     conn.commit()
 
 
-create_curser('insert into user values (ali,mobinifar,09338732517,mashhad_industerialArea)')
 
 
 create_connection('/home/alimobinifar/Documents/Resturant/my_database.db')
@@ -80,7 +79,8 @@ class food_data(DataBase):
                 rows = cur.fetchall()
                 for row in rows:
                     print(row)
-    
+    def remove_food(food_id):
+        create_curser(f"delete from Food where id ='{food_id}'")
     
 
 class Admin_query:
@@ -90,23 +90,47 @@ class Admin_query:
             insert_query=f"INSERT INTO admin (admin_id,username,password) VALUES('{admin_id}','{UserName}','{PassWord}')"
             create_curser(insert_query)
         
- 
-        def show_admin_list(self):
-                conn=sqlite3.connect('/home/alimobinifar/Documents/Resturant/my_database.db')
-                cur = conn.cursor()
-                cur.execute("SELECT * FROM admin")
-                rows = cur.fetchall()
-                for row in rows:
+        def admin_check(username,password):
+            conn=sqlite3.connect('/home/alimobinifar/Documents/Resturant/my_database.db')
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM admin")
+            rows = cur.fetchall()
+            for row in rows:
+                if row[1]==username and row[2]==password:
                     print(row)
+                    return True
+                    break
+                else:
+                    return False
+
+        
         
         def admin_updater(self,id,user_name,pass_word):
                 conn=sqlite3.connect('/home/alimobinifar/Documents/Resturant/my_database.db')
                 cur = conn.cursor()
                 cur.execute(f"UPDATE admin SET username ='{user_name}', password ='{pass_word}' WHERE admin_id ='{id}'")
                 conn.commit()
+       
+        def define_user(id,name,family,phone,Address):
+            DataBase.create_table_admin()
+            insert_query=f"INSERT INTO user (id,name,family,phone,Address) VALUES('{id}','{name}','{family}','{phone}','{Address}')"
+            create_curser(insert_query)
+    
+
+class user():
+
+    def show_user():
+            conn=sqlite3.connect('/home/alimobinifar/Documents/Resturant/my_database.db')
+            cur = conn.cursor()
+            cur.execute("SELECT * FROM user")
+            rows = cur.fetchall()
+            for row in rows:
+                print(row)
+    
                 
 Admin_query_runner=Admin_query()
-Admin_query_runner.admin_updater(12500, 'user_name', 'pass_word')
+
+
 
 
 

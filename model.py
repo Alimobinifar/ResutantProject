@@ -1,6 +1,7 @@
 from controller import Admin_query
 
 from controller import food_data
+
 class Admin(Admin_query):
 
     def __init__(self,username,password):
@@ -10,18 +11,18 @@ class Admin(Admin_query):
 
     def Admin_checker(self):
         try:
-            
-            if self.username=='Admin' and self.password=='Root':
+            if Admin_query.admin_check(self.username,self.password):
                 return True
-
-        except :
-
-            return False
+            else:
+               return False
+        except:
+            'internal error between line 13 and 19 in model'
     
     def define_admin(id,UserName,PassWord):
         Admin_query.define_admin(id, UserName, PassWord)
     
-
+    def add_user(id,name,family,phone,Address):
+        Admin_query.define_user(id, name, family, phone, Address)
         
 
 
