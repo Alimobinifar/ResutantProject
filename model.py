@@ -2,6 +2,10 @@ from controller import Admin_query
 
 from controller import food_data
 
+from controller import orders
+
+
+
 class Admin(Admin_query):
 
     def __init__(self,username,password):
@@ -23,7 +27,9 @@ class Admin(Admin_query):
     
     def add_user(id,name,family,phone,Address):
         Admin_query.define_user(id, name, family, phone, Address)
-        
+    
+    def edit_user_data(id,name, family, phone, address):
+        Admin_query.edit_user(id,name, family, phone, address)
 
 
 
@@ -32,8 +38,20 @@ class food(food_data):
     def add_food_data(food_id,food_name_,food_material_,food_price_,food_reservasion_):
         food_data.insert_food(food_id,food_name_, food_material_, food_price_, food_reservasion_)
 
-    def remove_food_date(food_id):
+    def remove_food_data(food_id):
         food_data.remove_food(food_id)
+    
+    def update_food_data(food_id,food_name_, food_material_, food_price_, food_reservasion_):
+        food_data.update_food(food_id, food_name_, food_material_, food_price_, food_reservasion_)
+
+
+class order(orders):
+    
+    def order(costumer_id,food_id,count):
+        orders.register_order(costumer_id, food_id, count)
+
+    
+
 
 class root_admin(Admin_query):
 

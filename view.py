@@ -1,6 +1,7 @@
 from model import Admin ,food
 from controller import food_data,user
 from model import root_admin
+from model import order
 class View:
      
     def __init__(self,type_):
@@ -26,15 +27,16 @@ class login():
             
             admin_runner=Admin(user_name, pass_word)
             
+        
             if admin_runner.Admin_checker()==True:
                 print(' ')
                 print('Hello you loggined as an amdin\n')
-                print('')
-                print('for define an admin (just by root admin): add amin ')
+                print(' ')
+                print('for define an admin (just by root admin) : add amin ')
 
-                print('For see menu enter (Menu) \n')
+                print('For see menu enter : Menu \n')
                 
-                print('For see menu enter add food \n')
+                print('For add food  : add food \n')
 
                 print('For remove food enter rm food \n')
                 
@@ -42,11 +44,16 @@ class login():
 
                 print('for edit menu enter : Menu Edit\n')
 
-                print('for change password enter (chpass)\n')
-
                 print('for define users : add user \n')
+                
+                print('for edit food of menu : edit menu ')
+
+                print('for edit user : edit user ')
+
+
                 print('\n')
-                request=input('what do you want to do ?\n ')
+
+                request=input('what do you want to do ?  \n ')
 
                 if request=='menu' or request=='Menu':
                        show_data.show_menu_()
@@ -76,15 +83,42 @@ class login():
                     except Error as e :
                             print(e)
 
-
-                 
-
-                             
+                elif request=='edit menu' or request=='Edit Menu':
+                    admin.edit_menu_by_admin()
                 
+                elif request=='edit user':
+                    user_.edit_user()
 
-             
+                else:
+                    print('mistake command ...')
+         
+            else:
+                print('you are not admin  , please try agian ...')
 
-    
+    def user():
+        print('hello you loggind as user , you can just see the menu and order ...')
+        user_order.order()
+
+
+class user_order(order):
+
+    def order():
+        print('this is list of food : ')
+        show_data.show_menu()
+        list_of_order =[]
+        while True:
+            food=input('whitch do you want ? ')
+            count=int(input('how many do you want ?'))
+            costumer_id=input('please enter your id : ')
+            n=input('do want to continue order ? (yes/no) :')
+            order.register_order(costumer_id, food, count)
+            if n=='no':
+                break
+            else:
+                continue
+
+
+
 
 class show_data(food_data,user):
      
@@ -109,8 +143,32 @@ class user_():
         address=input('please enter users address :')
         try:
             Admin.define_user(id, name, family, phone, address)    
+
+            print('sucsessfully defined . ')
         except:
             'Error in Internal Services ... '
+
+    def edit_user():
+        print('Now you are editing user ...')
+
+        id=input('whitch user do you want to edit ? please enter id  :')
+
+        name=input('please enter name of user :')
+
+        family=input('please enter users family :')
+
+        phone=input('please enter users phone :')
+
+        address=input('please enter users address :')
+
+        Admin.edit_user(id, name, family, phone, address)
+
+        print('successfully edited. ')
+
+
+
+
+
 class admin(food):
 
     def change_password():
@@ -125,18 +183,38 @@ class admin(food):
         price=int(input('please enter price : '))
         food_reservasion=input('is it possible to reserve or no ?')
 
-        # try:
-        food.add_food_data(food_id, name, material, price, food_reservasion)
+        try:
+            food.add_food_data(food_id, name, material, price, food_reservasion)
 
-        # except :
-        #     raise Exception('some problems in adding data... check functions ...')
+            print('food Successfully registred . ')
+
+        except :
+            raise Exception('some problems in adding data... check functions ...')
     
     def remove_food_by_admin():
+        try:
+            food_id=input('please enter food id  :  ')
+            food.remove_food_data(food_id)
+            print(' ')
+
+            print('removed successflly . ')
+        
+        except:
+            raise Exception('Error internal services ... ')
+    
+    def edit_menu_by_admin():
 
         food_id=input('please enter food id : ')
-        food_data.remove_food(food_id)
-    
+        food_name=input('whats food name ? ')
+        food_material=input('whats food material : ')
+        food_price=input('please enter price  : ')
+        food_reservasion=input('please enter can custumers order or no ? ')
 
+        try:
+            food.update_food_data(food_id, food_name, food_material, food_price, food_reservasion)
+            print('edit successful.')
+        except:
+            raise Exception('Error in internal services ...')
 
 
 
