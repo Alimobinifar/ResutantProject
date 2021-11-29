@@ -62,7 +62,7 @@ class DataBase:
 
 class food_data(DataBase):
 
-    def insert_food(self,food_id,food_name,food_material,food_price,food_reservasion):
+    def insert_food(food_id,food_name,food_material,food_price,food_reservasion):
         DataBase.create_table_food()
         insert_query=f"INSERT INTO Food (id,name,material,price,reservation) VALUES('{food_id}','{food_name}','{food_material}','{food_price}','{food_reservasion}')"
         # insert_query='''insert into food values('khye bagher', 'er +ghorme +rice', '43534','yes')'''
@@ -96,7 +96,7 @@ class Admin_query:
             cur.execute("SELECT * FROM admin")
             rows = cur.fetchall()
             for row in rows:
-                if row[1]==username and row[2]==password:
+                if row[1]==username and row[2]==password :
                     print(row)
                     return True
                     break

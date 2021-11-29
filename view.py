@@ -1,5 +1,6 @@
 from model import Admin ,food
 from controller import food_data,user
+from model import root_admin
 class View:
      
     def __init__(self,type_):
@@ -29,6 +30,8 @@ class login():
                 print(' ')
                 print('Hello you loggined as an amdin\n')
                 print('')
+                print('for define an admin (just by root admin): add amin ')
+
                 print('For see menu enter (Menu) \n')
                 
                 print('For see menu enter add food \n')
@@ -59,6 +62,23 @@ class login():
                 
                 elif request=='rm food' :
                     admin.remove_food_by_admin()
+                
+                elif request=='add admin':
+                    try:
+                        if user_name=='Admin' and pass_word=='Root':
+                            admin_id=input('please enter amin id : ')
+                            UserName=input('please enter user name : ')
+                            PassWord=input('please enter password')
+                            root_admin.define_admin(admin_id, UserName, PassWord)
+                            print('successflly registered . ')
+                        else:
+                            print('just root admin is able to manage other admins .... ')
+                    except Error as e :
+                            print(e)
+
+
+                 
+
                              
                 
 
@@ -91,24 +111,33 @@ class user_():
             Admin.define_user(id, name, family, phone, address)    
         except:
             'Error in Internal Services ... '
-class admin:
+class admin(food):
 
     def change_password():
 
         admin=input('please enter your new password :')   
     
     def add_food_by_admin():
-        id=input('please enter food id :')
+
+        food_id=int(input('please enter food id :'))
         name=input('please enter food name :')
         material=input('whats the material of this food ? ')
-        price=input('please enter price : ')
+        price=int(input('please enter price : '))
         food_reservasion=input('is it possible to reserve or no ?')
-        food.add_food_data(id, name, material, price, food_reservasion)
+
+        # try:
+        food.add_food_data(food_id, name, material, price, food_reservasion)
+
+        # except :
+        #     raise Exception('some problems in adding data... check functions ...')
     
     def remove_food_by_admin():
 
         food_id=input('please enter food id : ')
         food_data.remove_food(food_id)
+    
+
+
 
 
 User_type=input('please enter who are you admin or user ?  : ')
